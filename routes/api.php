@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -24,3 +25,8 @@ Route::get('/test', function () {
         'message' => 'Welcome to our API',
     ]);
 });
+
+
+// Route::post('/user/signup', 'UserController@signup');
+Route::post('user/signup', [UserController::class, 'signup']);
+Route::post('/user/login', 'UserController@login');
