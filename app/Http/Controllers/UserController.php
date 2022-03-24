@@ -30,7 +30,7 @@ class UserController extends Controller
 
         $token = $user->createToken('authToken')->accessToken;
 
-        $refreshToken = 
+        
 
         return response()->json([
             'user' => $user,
@@ -57,11 +57,11 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function getTokenAndRefreshToken(OClient $oClient, $email, $password)
-    {
-        $oClient = Oclient::where('password_client', 1)->first();
-        $http = new Client
-    }
+//     public function getTokenAndRefreshToken(OClient $oClient, $email, $password)
+//     {
+//         $oClient = Oclient::where('password_client', 1)->first();
+//         $http = new Client
+//     }
 
     /**
      * Update the specified resource in storage.
