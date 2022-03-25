@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Route;
 use Laravel\Passport\Client as OClient;
 use Illuminate\Support\Str;
 
@@ -69,15 +70,16 @@ class UserController extends Controller
             ], 401);
         }
 
-        return Http::asForm()->post('http://127.0.0.1:8000/api/testdado', [
+        $request->request->add([
             'grant_type' => 'password',
             'client_id' => 2,
             'client_secret' => 'Dgfv8m0w6uQBEwGh4XAKKKurDRsTt0iXlUQnmisl',
+            'scope' => '*',
             'username' => request("email"),
-            'password' => request("password"),
-            'scope' => '*'
         ]);
-        return 'success';
+
+        $proxy = Request::create('/oauth/token', 'POST', $request->all());
+        return json_decode(app()->handle($proxy)->getContent());
     }
 
 
