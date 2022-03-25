@@ -20,13 +20,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-Route::get('/test', function () {
-    return response()->json([
-        'message' => 'Welcome to our API',
-    ]);
-});
-
-
-// Route::post('/user/signup', 'UserController@signup');
 Route::post('user/signup', [UserController::class, 'signup']);
-Route::post('/user/login', 'UserController@login');
+Route::post('user/login', [UserController::class, 'login']);
+Route::get('/auth/callback', [UserController::class, 'callback']);
+Route::get('/auth/redirect', [UserController::class, 'customRedirect']);
+Route::post('/testdado', function(Request $request){
+    dd($request);
+});
