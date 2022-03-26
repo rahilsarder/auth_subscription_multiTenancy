@@ -79,6 +79,8 @@ class UserController extends Controller
         ]);
 
         $proxy = Request::create('/oauth/token', 'POST', $request->all());
+
+        return Route::dispatch($proxy);
         return json_decode(app()->handle($proxy)->getContent());
     }
 
