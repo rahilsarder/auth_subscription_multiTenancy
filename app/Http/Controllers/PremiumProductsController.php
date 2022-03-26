@@ -20,7 +20,7 @@ class PremiumProductsController extends Controller
 
         return response()->json([
             'message' => 'You are not a Premium User',
-            'subscription_url' => 'http://' . env('APP_URL') . '/subscription/subscribe'
+            'subscription_url' => env('APP_URL') . 'subscription/subscribe'
         ]);
     }
 
