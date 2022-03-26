@@ -20,10 +20,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
+// Auth::routes();
 Route::post('user/signup', [UserController::class, 'signup']);
 Route::post('user/login', [UserController::class, 'login']);
-Route::get('/auth/callback', [UserController::class, 'callback']);
-Route::get('/auth/redirect', [UserController::class, 'customRedirect']);
-Route::post('/testdado', function(Request $request){
-    dd($request);
-});
+Route::post('auth/refresh', [UserController::class, 'refreshToken']);
+
+

@@ -3,24 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Exception;
-use GuzzleHttp\Client;
-use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
-use Laravel\Passport\Client as OClient;
-use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function signup(Request $req)
     {
         $req->validate([
@@ -35,22 +25,15 @@ class UserController extends Controller
             'name' => $req->name,
         ]);
 
-        $token = $this->customTokenGenerator();
-
-        
+        $http = $this->createAuthToken($req);
 
         return response()->json([
             'user' => $user,
-            'token' => $token,
+            'token' => $http,
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function login(Request $request)
     {
         $request->validate([
@@ -71,6 +54,25 @@ class UserController extends Controller
             ], 401);
         }
 
+        $http = $this->createAuthToken($request);
+
+        return response()->json($http);
+    }
+
+    public function refreshToken(Request $request)
+    {
+
+        $request->validate([
+            'refresh_token' => 'required'
+        ]);
+
+        $http = $this->oauthRefreshToken($request);
+
+        return response()->json($http);
+    }
+
+    static function createAuthToken(Request $request)
+    {
         $request->request->add([
             'grant_type' => 'password',
             'client_id' => 2,
@@ -81,44 +83,29 @@ class UserController extends Controller
 
         $proxy = Request::create('/oauth/token', 'POST', $request->all());
 
-        return Route::dispatch($proxy);
-        return json_decode(app()->handle($proxy)->getContent());
+        $response = Route::dispatch($proxy);
+
+        $token = json_decode($response->getContent());
+
+        return $token;
     }
 
-
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-//     public function getTokenAndRefreshToken(OClient $oClient, $email, $password)
-//     {
-//         $oClient = Oclient::where('password_client', 1)->first();
-//         $http = new Client
-//     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    static function oauthRefreshToken(Request $request)
     {
-        //
-    }
+        $request->request->add([
+            'grant_type' => 'refresh_token',
+            'client_id' => 2,
+            'client_secret' => 'Dgfv8m0w6uQBEwGh4XAKKKurDRsTt0iXlUQnmisl',
+            'scope' => '*',
+            'refresh_token' => request("refresh_token"),
+        ]);
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        $proxy = Request::create('/oauth/token', 'POST', $request->all());
+
+        $response = Route::dispatch($proxy);
+
+        $token = json_decode($response->getContent());
+
+        return $token;
     }
 }
