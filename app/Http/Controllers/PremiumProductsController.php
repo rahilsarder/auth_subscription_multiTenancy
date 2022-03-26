@@ -28,8 +28,8 @@ class PremiumProductsController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'price' => 'required|float',
-            'slug' => 'required|string',
+            'price' => 'required',
+            'slug' => 'required',
         ]);
 
         $user = Auth::user()->is_admin;
@@ -40,7 +40,11 @@ class PremiumProductsController extends Controller
             ]);
         }
 
-        $product = PremiumProducts::create($request->all());
+        $product = PremiumProducts::create([
+            'name' => $request->name,
+            'price' => $request->price,
+            'slug' => $request->slug
+        ]);
 
         return response()->json($product);
     }

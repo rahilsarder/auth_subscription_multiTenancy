@@ -37,5 +37,6 @@ Route::middleware(['auth:api'])->group(function () {
     Route::post('subscription/subscribe', [SubscribedUsersController::class, 'store']);
     Route::prefix('premium')->group(function () {
         Route::get('products', [PremiumProductsController::class, 'index']);
+        Route::post('products', [PremiumProductsController::class, 'store']);
     });
 });
