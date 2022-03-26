@@ -37,10 +37,7 @@ class UserController extends Controller
 
         $token = $this->customTokenGenerator();
 
-<<<<<<< HEAD
         
-=======
->>>>>>> test
 
         return response()->json([
             'user' => $user,
@@ -96,19 +93,11 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-<<<<<<< HEAD
 //     public function getTokenAndRefreshToken(OClient $oClient, $email, $password)
 //     {
 //         $oClient = Oclient::where('password_client', 1)->first();
 //         $http = new Client
 //     }
-=======
-    // public function getTokenAndRefreshToken(OClient $oClient, $email, $password)
-    // {
-    //     $oClient = Oclient::where('password_client', 1)->first();
-    //     $http = new Client;
-    // }
->>>>>>> test
 
     /**
      * Update the specified resource in storage.
