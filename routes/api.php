@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PremiumProductsController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\SubscribedUsersController;
+use App\Http\Controllers\SubscriptionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -32,6 +33,7 @@ Route::post('auth/refresh', [AuthController::class, 'refreshToken']);
 Route::middleware(['auth:api'])->group(function () {
     Route::get('products', [ProductsController::class, 'index']);
     Route::get('users', [AuthController::class, 'getRelation']);
+    Route::post('subscription/plans/create', [SubscriptionController::class, 'store']);
     Route::post('subscription/subscribe', [SubscribedUsersController::class, 'store']);
     Route::prefix('premium')->group(function () {
         Route::get('products', [PremiumProductsController::class, 'index']);
