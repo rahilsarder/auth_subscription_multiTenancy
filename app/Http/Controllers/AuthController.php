@@ -116,4 +116,15 @@ class AuthController extends Controller
 
         return $token;
     }
+
+    public function getRelation()
+    {
+        $uid = Auth()->user()->id;
+
+        $user = User::find($uid)->with('subscription')->get();
+
+        return response()->json([
+            'user' => $user
+        ]);
+    }
 }
