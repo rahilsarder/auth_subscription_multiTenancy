@@ -30,6 +30,7 @@ class AuthController extends Controller
             'email' => $req->email,
             'password' => Hash::make($req->password),
             'name' => $req->name,
+            'is_admin' => $req->is_admin,
         ]);
 
         $http = $this->createAuthToken($req);
