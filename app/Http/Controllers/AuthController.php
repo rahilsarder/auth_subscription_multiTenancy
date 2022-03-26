@@ -7,9 +7,16 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
+use Laravel\Passport\Passport;
 
-class UserController extends Controller
+class AuthController extends Controller
 {
+    private static $passport;
+
+    public function __construct()
+    {
+        self::$passport = Passport::$clientModel::where('name', 'Laravel Password Grant Client')->first();
+    }
 
     public function signup(Request $req)
     {
@@ -73,10 +80,11 @@ class UserController extends Controller
 
     static function createAuthToken(Request $request)
     {
+
         $request->request->add([
             'grant_type' => 'password',
-            'client_id' => 2,
-            'client_secret' => 'Dgfv8m0w6uQBEwGh4XAKKKurDRsTt0iXlUQnmisl',
+            'client_id' => self::$passport->id,
+            'client_secret' => self::$passport->secret,
             'scope' => '*',
             'username' => request("email"),
         ]);
@@ -94,8 +102,8 @@ class UserController extends Controller
     {
         $request->request->add([
             'grant_type' => 'refresh_token',
-            'client_id' => 2,
-            'client_secret' => 'Dgfv8m0w6uQBEwGh4XAKKKurDRsTt0iXlUQnmisl',
+            'client_id' => self::$passport->id,
+            'client_secret' => self::$passport->secret,
             'scope' => '*',
             'refresh_token' => request("refresh_token"),
         ]);

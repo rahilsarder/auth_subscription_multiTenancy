@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Laravel\Passport\Passport;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,7 +21,8 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function (Request $request) {
     return view('dashboard', [
-        'clients' => $request->user()->clients
+        'clients' => $request->user()->clients,
+        'personalClients' => Passport::$clientModel::where('name', 'Laravel Password Grant Client')->first(),
     ]);
 })->middleware(['auth'])->name('dashboard');
 
