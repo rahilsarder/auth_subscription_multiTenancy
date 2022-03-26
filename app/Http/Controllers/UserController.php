@@ -3,9 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Exception;
+use GuzzleHttp\Client;
+use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Route;
 use Laravel\Passport\Client as OClient;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -28,9 +35,12 @@ class UserController extends Controller
             'name' => $req->name,
         ]);
 
-        $token = $user->createToken('authToken')->accessToken;
+        $token = $this->customTokenGenerator();
 
+<<<<<<< HEAD
         
+=======
+>>>>>>> test
 
         return response()->json([
             'user' => $user,
@@ -38,18 +48,47 @@ class UserController extends Controller
         ]);
     }
 
-
-
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function login(Request $request)
     {
-        //
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required'
+        ]);
+
+
+        $user = Auth::attempt([
+            'email' => $request->email,
+            'password' => $request->password
+        ]);
+
+        if (!$user) {
+            return response()->json([
+                'message' => '
+                Invalid credentials'
+            ], 401);
+        }
+
+        $request->request->add([
+            'grant_type' => 'password',
+            'client_id' => 2,
+            'client_secret' => 'Dgfv8m0w6uQBEwGh4XAKKKurDRsTt0iXlUQnmisl',
+            'scope' => '*',
+            'username' => request("email"),
+        ]);
+
+        $proxy = Request::create('/oauth/token', 'POST', $request->all());
+
+        return Route::dispatch($proxy);
+        return json_decode(app()->handle($proxy)->getContent());
     }
+
+
 
     /**
      * Display the specified resource.
@@ -57,11 +96,19 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+<<<<<<< HEAD
 //     public function getTokenAndRefreshToken(OClient $oClient, $email, $password)
 //     {
 //         $oClient = Oclient::where('password_client', 1)->first();
 //         $http = new Client
 //     }
+=======
+    // public function getTokenAndRefreshToken(OClient $oClient, $email, $password)
+    // {
+    //     $oClient = Oclient::where('password_client', 1)->first();
+    //     $http = new Client;
+    // }
+>>>>>>> test
 
     /**
      * Update the specified resource in storage.
