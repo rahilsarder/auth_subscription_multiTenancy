@@ -11,11 +11,7 @@ class PremiumProducts extends Model
 
 
     protected $fillable = [
-        'name',
-        'description',
-        'price',
-        'image',
-        'user_id',
+        'name', 'price', 'slug',
     ];
 
     public function product()

@@ -43,7 +43,7 @@ class PremiumProductsController extends Controller
         $product = PremiumProducts::create([
             'name' => $request->name,
             'price' => $request->price,
-            'slug' => $request->slug
+            'slug' => $request->slug,
         ]);
 
         return response()->json($product);
