@@ -30,7 +30,7 @@ class SubscriptionController extends Controller
 
         $request->validate([
             'name' => 'required',
-            'price' => 'required|float',
+            'price' => 'required',
         ]);
 
         $user = Auth::user()->is_admin;
