@@ -55,7 +55,6 @@ Route::middleware([
 
     Route::post('/users/add', function (Request $request) {
         $user = User::add($request->all());
-        view('addTenants');
         return redirect('/users');
     });
 });

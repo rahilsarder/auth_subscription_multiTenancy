@@ -13,7 +13,7 @@
                 </div>
             </div>
 
-            @foreach ($tenant as $tenant)
+            @forelse ($tenant as $tenant)
                 <div class="py-3 text-gray-900 mt-3 pl-3">
                     <a href="http://{{ $tenant->domain->domain }}:8000"><b>Domain: </b>{{ $tenant->domain->domain }}:8000</a>
                     <h2><b>{{ $tenant->id }}</b></h2>
@@ -21,7 +21,11 @@
                     <p><b>Tenant DB NAME: </b>{{ $tenant->tenancy_db_name }}</p>
                     <a href="/dashboard/tenants/delete/{{ $tenant->id }}" class='btn btn-danger'>Delete</a>
                 </div>
-            @endforeach
+                @empty
+                    <div class="py-3 text-gray-900 mt-3 pl-3">
+                        <h2>No Tenants</h2>
+                    </div>
+            @endforelse
 
         </div>
 
