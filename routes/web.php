@@ -88,4 +88,16 @@ Route::get('tanvir', function () {
 Route::get('/users', function () {
     return User::all();
 });
+
+Route::get('/pricing', function () {
+    return view('pricing');
+});
+
+Route::get('/tables', function () {
+    return view('tables');
+});
+
+Route::get('/signin', function () {
+    return view('signin');
+});
 require __DIR__ . '/auth.php';

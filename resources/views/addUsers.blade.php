@@ -7,24 +7,28 @@
 
     <div class="py-12 ">
         
-        <form action='/users/add' method="POST">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mt-2">
-                <div class="mt-2">
-
-                    <x-label >Name</x-label>  
-                    <x-input type='text' name='name' placeholder='Name' class="mt-2 px-3"/>
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mt-3 pl-3">
+            <form action="/users/add" method="POST">
+                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                    <x-label for='name'>Name</x-label>
+                    <x-input type='text' name='name' placeholder='Name of Client' />
                 </div>
-                <div class="mt-2">
-                <x-label>Email</x-label>
-                <x-input type='text' name='email' placeholder='Email' class="mt-2 px-3"/>
-                <x-label>Password</x-label>
-                <x-input type='text' name='password' placeholder='Password' class="mt-2 px-3"/>
+                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mt-2">
+                    <x-label for='email'>Email</x-label>
+                    <x-input type='email' name='email' placeholder='Email Address....' />
+                </div>
+                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mt-2">
+                    <x-label for='password'>Password</x-label>
+                    <x-input type='password' name='password' placeholder='Enter your password' />
+                </div>
                 
-            </div>
-            @csrf
-            <x-button type='submit' class='mt-3'>Create</x-button>
-            </div>
-        </form>
+                <div class="mt-2">
+                    @csrf
+                    
+                    <x-button type='submit'>Submit</x-button>
+                </div>
+            </form>
+        </div>
 
 
 
@@ -34,12 +38,16 @@
                     Here are the list of Users under tenant: 
                 </div>
             </div>
-
-           @forelse ($users as $user)
-               Name: {{ $user }}
-               @empty
-                No Tenants
-           @endforelse
+            <div class="my-3">
+                
+                @forelse ($users as $user)
+                    <p> <b>ID:</b> {{ $user->id }} </p>
+                    <p><b>Name:</b>{{ $user->name }}</p>
+                     <p><b>Email:</b> {{ $user->email  }}</p>
+                    @empty
+                     No Users
+                @endforelse
+            </div>
 
         </div>
 

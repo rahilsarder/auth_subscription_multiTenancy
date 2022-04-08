@@ -12,13 +12,13 @@ class SubscriptionController extends Controller
 {
     public function index()
     {
-        $user = Auth::user()->is_admin;
+        // $user = Auth::user()->is_admin;
 
-        if (!$user) {
-            return response()->json([
-                'message' => 'You dont have permission to access this page'
-            ], Response::HTTP_FORBIDDEN);
-        }
+        // if (!$user) {
+        //     return response()->json([
+        //         'message' => 'You dont have permission to access this page'
+        //     ], Response::HTTP_FORBIDDEN);
+        // }
 
         $subscription = Subscription::all();
 

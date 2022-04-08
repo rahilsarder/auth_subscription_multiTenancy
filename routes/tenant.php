@@ -6,6 +6,7 @@ use App\Models\Tenant;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Laravel\Passport\Passport;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 
@@ -37,6 +38,13 @@ Route::middleware([
         return 'Welcome to the test route of the tenant application ' . tenant('id');
     });
 
+    Route::get('/dashboard', function (Request $request) {
+        return view('dashboard', [
+            'clients' => $request->user(),
+            'personalClients' => Passport::$clientModel::where('name', 'Laravel Password Grant Client')->first(),
+        ]);
+    });
+
     Route::get('/users', function () {
 
         $user = User::all();
@@ -54,7 +62,8 @@ Route::middleware([
     });
 
     Route::post('/users/add', function (Request $request) {
-        $user = User::add($request->all());
+
+        $user = User::create($request->all());
         return redirect('/users');
     });
 });

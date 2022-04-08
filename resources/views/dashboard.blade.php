@@ -13,14 +13,14 @@
                 </div>
             </div>
 
-            @foreach ($clients as $client)
+            {{-- @foreach ($clients as $client)
                 <div class="py-3 text-gray-900 mt-2 pl-3">
                     <h3>{{ $client->name }}</h3>
                     <p><b>Client ID: </b>{{ $client->id }}</p>
                     <p><b>Client Redirect URI: </b>{{ $client->redirect }}</p>
                     <p><b>Client Secret: </b>{{ $client->secret }}</p>
                 </div>
-            @endforeach
+            @endforeach --}}
         </div>
 
 

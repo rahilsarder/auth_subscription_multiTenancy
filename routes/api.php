@@ -31,7 +31,6 @@ Route::post('auth/refresh', [AuthController::class, 'refreshToken']);
 
 // Protected Routes Passport
 Route::middleware(['auth:api'])->group(function () {
-    Route::get('products', [ProductsController::class, 'index']);
     Route::get('users', [AuthController::class, 'getRelation']);
     Route::post('subscription/plans/create', [SubscriptionController::class, 'store']);
     Route::post('subscription/subscribe', [SubscribedUsersController::class, 'store']);
@@ -40,3 +39,6 @@ Route::middleware(['auth:api'])->group(function () {
         Route::post('products', [PremiumProductsController::class, 'store']);
     });
 });
+
+Route::get('products', [ProductsController::class, 'index']);
+Route::get('subscription', [SubscriptionController::class, 'index']);
