@@ -128,4 +128,9 @@ class AuthController extends Controller
             'user' => $user
         ]);
     }
+
+    public function getUserInfo()
+    {
+        return response()->json(Auth::user());
+    }
 }
